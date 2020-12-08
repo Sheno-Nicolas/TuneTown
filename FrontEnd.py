@@ -18,9 +18,10 @@ class Window(QWidget):
         self.best = False
 
         self.InitWindow()
-
+        
+    #Initializing the window
     def InitWindow(self):
-
+        #Creating widgits and interfacce
         artist_line_edit = QLineEdit()
 
         hour_line_edit = QLineEdit()
@@ -64,12 +65,11 @@ class Window(QWidget):
         # hBox.addWidget(QLabel("second(s)"))
         # vBox.addLayout(hBox)
 
-        
-
         #vBox.addWidget(submit_button)
         
         self.setLayout(vBox)
-
+        
+        #Changing the design and color of our GUI
         palette = QtGui.QPalette()
         palette.setColor(QtGui.QPalette.Window, QColor("#e7daf9"))
         palette.setColor(QtGui.QPalette.WindowText, QColor("#000000"))
@@ -79,15 +79,18 @@ class Window(QWidget):
         palette.setColor(QtGui.QPalette.ButtonText, QtCore.Qt.black)
         palette.setColor(QtGui.QPalette.Midlight, QtCore.Qt.white)
         self.setPalette(palette)
-
+        
+        #More items added to interface
         make_playlist = QLabel("Want to add your playlist to Spotify?")
         yes = QRadioButton("Yes")
         no = QRadioButton("No")
         hBox3 = QHBoxLayout()
         hBox3.addWidget(yes)
         hBox3.addWidget(no)
-
+        
+        #On click of make_own button we go to the make_own function which adds to the interface for that functionality
         user_input_label.clicked.connect(lambda: make_own())
+        #Taking in input from user to make their own playlist
         def make_own():
             vBox.addWidget(QLabel("Artist(s): "))
             vBox.addWidget(artist_line_edit)
@@ -104,17 +107,19 @@ class Window(QWidget):
             vBox.addLayout(hBox)
 
             vBox.addWidget(submit_button)
-
+        #main object
         mainObj = main.mainClass()
-
+        #User submitting their inputs 
         submit_button.clicked.connect(lambda: hold_user_input())
+        #taking in user input and putting it to use
         def hold_user_input():
+            #allows for input of multiple artists
             artist_list = artist_line_edit.text().split(", ")
             set(artist_list)
 
             #artist_list = set([artist_line_edit.text()])
             mainObj.setValues(artist_list, hour_line_edit.text(), minute_line_edit.text(), second_line_edit.text())
-
+            #checks if first fit or best fit is clicked
             self.first = first_fit_button.isChecked()
             self.best = best_fit_button.isChecked()
             if both_button.isChecked() :
@@ -123,7 +128,7 @@ class Window(QWidget):
 
             print_songs = mainObj.generate(self.first, self.best)
 
-            # POP OUT BOX 
+            # POP OUT BOX TO PRINT OUT OUTPUT
             alert = QMessageBox()
             alert.setText(print_songs) 
             alert.exec_()
@@ -131,6 +136,8 @@ class Window(QWidget):
             vBox.addWidget(make_playlist)
             vBox.addLayout(hBox3)
         
+        
+        #Taking in more input from the user
         ask_for_addy = QLabel("Please enter the authorization token:")
         input_addy = QLineEdit()
         ask_for_name = QLabel("What would you like to name your playlist(s)?")
@@ -145,7 +152,8 @@ class Window(QWidget):
         hBox_best = QHBoxLayout()
         hBox_best.addWidget(best_name)
         hBox_best.addWidget(best_input)
-
+        
+        #Random functionality 
         random_label.clicked.connect(lambda: make_random())
         def make_random():
             self.first = first_fit_button.isChecked()
@@ -153,7 +161,7 @@ class Window(QWidget):
             if both_button.isChecked() :
                 self.first = True
                 self.best = True
-
+            #Calls random function from main
             mainObj.randomValues()
 
             print_songs = mainObj.generate(self.first, self.best)
@@ -184,7 +192,7 @@ class Window(QWidget):
             vBox.addWidget(submit2)
         
         submit2.clicked.connect(lambda: done())
-
+        #Imports playlist to spotify 
         def done():
             # import spotify
             # spotify.spotify_token = input_addy.text()
@@ -198,11 +206,12 @@ class Window(QWidget):
 
             vBox.addWidget(QLabel("ALL DONE!"))
         
+        
         self.setWindowTitle(self.title)
         self.setGeometry(self.top, self.left, self.width, self.height)
         self.show()
 
-       
+#Starts up actual window  
 app = QApplication(sys.argv)
 window = Window()
 sys.exit(app.exec())
