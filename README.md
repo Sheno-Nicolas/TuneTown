@@ -1,1 +1,2 @@
 # TuneTown
+We are trying to solve the problem of wanting to listen to a certain (or many) genre(s) and/or artist(s) but only having a limited time to listen to the music. In essence, with the certain time inputted, the program will output a playlist that will be the desired time length using bin-packing algorithms. This may have many uses, for example, one can use the playlist outputted as a music timer
