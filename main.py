@@ -8,7 +8,7 @@ class mainClass :
         super().__init__()
         self.input_artist = set([])
         self.myMap = {}
-
+    #Set values of the inputs
     def setValues(self, input_artist_set, input_td_hours, input_td_min, input_td_sec):
         self.input_artist = input_artist_set
         self.time_desired_hours = input_td_hours
@@ -16,7 +16,8 @@ class mainClass :
         self.time_desired_sec = input_td_sec
         self.first_playlist_songs = []
         self.best_playlist_songs = []
-
+        
+    #Randomizes the input 
     def randomValues(self):
         
         #random_playlist_desired = False
@@ -161,7 +162,7 @@ class mainClass :
         
         return toPrint
 
-
+    #Creating the playlist depending on the type of algorithm
     def make_first_playlist(self, playlist_name):
         print("Make first playlist called")
         from spotify import SpotifyPlaylist
